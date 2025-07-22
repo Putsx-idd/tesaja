@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puts Store - Top Up Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --ff-orange: #ff6a00;
+            --ff-blue: #00a8ff;
+            --robux-red: #ff4655;
+            --robux-blue: #0a1428;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-bottom: 60px;
+            position: relative;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 5%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-icons i {
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-icons i:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 5% 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            box-shadow: var(--card-shadow);
+            font-size: 1rem;
+            padding-right: 50px;
+        }
+
+        .search-container button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-container button:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .container {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            flex: 0 0 250px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .sidebar h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+
+        .category-list a {
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .category-list a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .category-list a i {
+            color: var(--secondary);
+        }
+
+        .active-category {
+            color: var(--primary) !important;
+            font-weight: 600 !important;
+        }
+
+        /* Product Section */
+        .products {
+            flex: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .sort-filter {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-filter select {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--light-gray);
+            background: white;
+            font-size: 0.9rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        }
+
+        .product-image img {
+            max-width: 80%;
+            max-height: 80%;
+            transition: var(--transition);
+            object-fit: contain;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            color:  var(--primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+
+        .product-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .add-to-cart {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .add-to-cart:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem 5%;
+            margin-top: 4rem;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Category Pages */
+        .category-page {
+            padding: 2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .free-fire-header h1 {
+            
+        }
+        
+        .robux-header h1 {
+            
+        }
+
+        .back-button {
+            background: var(--light-gray);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            background: var(--secondary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .page-description {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .page-description p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: var(--gray);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-icon {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: var(--primary);
+        }
+        
+        .free-fire-icon {
+            background: linear-gradient(135deg, #ff6a00, #00a8ff);
+        }
+        
+        .robux-icon {
+            background: linear-gradient(135deg, #ff4655, #0a1428);
+        }
+
+        .category-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .category-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .category-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-top: 10px;
+            padding: 0 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .category-detail.expanded {
+            max-height: 500px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+
+        .category-price {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+        
+        .free-fire-price {
+            color: var(--ff-orange);
+        }
+        
+        .robux-price {
+            color: var(--robux-red);
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .buy-button {
+            flex: 1;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .free-fire-button {
+            background: linear-gradient(135deg, var(--ff-orange), var(--ff-blue));
+        }
+        
+        .robux-button {
+            background: linear-gradient(135deg, var(--robux-red), var(--robux-blue));
+        }
+
+        .buy-button:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-button {
+            flex: 1;
+            background: var(--light-gray);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .detail-button:hover {
+            background: var(--gray);
+            color: white;
+        }
+        
+        .detail-button.expanded {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* Modal Pembayaran */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: modalAppear 0.4s ease-out;
+            overflow: hidden;
+        }
+        
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+            z-index: 2;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+        
+        .modal h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .modal h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .qris-container {
+            position: relative;
+            padding: 20px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+        
+        .qris-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient);
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .modal img {
+            width: 100%;
+            max-width: 280px;
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            margin: 1rem auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal img:hover {
+            transform: scale(1.02);
+        }
+        
+        .modal-instructions {
+            background: var(--light-gray);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+            position: relative;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .modal-instructions:before {
+            content: '\f05a';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            background: var(--secondary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .modal-instructions p {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .modal-instructions ol {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .modal-instructions li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            color: var(--gray);
+        }
+        
+        .whatsapp-button {
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin: 1rem auto 0;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-button:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        }
+        
+        .whatsapp-button i {
+            font-size: 1.4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                flex: 0 0 auto;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 5% 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+            
+            .modal h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo span {
+                display: none;
+            }
+            
+            .nav-icons {
+                gap: 1rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-actions {
+                flex-direction: column;
+            }
+            
+            .modal-instructions {
+                font-size: 0.9rem;
+            }
+            
+            .whatsapp-button {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span>Puts Store</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Beranda</a></li>
+                <li><a href="#">Produk</a></li>
+                <li><a href="#">Kategori</a></li>
+                <li><a href="#">Promo</a></li>
+                <li><a href="#">Tentang Kami</a></li>
+            </ul>
+            <div class="nav-icons">
+                <i class="fas fa-search"></i>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </div>
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Temukan Produk Digital Terbaik di Puts Store</h1>
+        <p>Kami menyediakan berbagai produk digital dan fisik berkualitas tinggi dengan harga terbaik. Solusi lengkap untuk kebutuhan digital Anda.</p>
+        <div class="search-container">
+            <input type="text" placeholder="Cari produk, kategori, atau kata kunci...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Kategori Produk</h2>
+            <ul class="category-list">
+                <li><a href="#" class="active-category" id="all-products-link"><i class="fas fa-layer-group"></i> Semua Produk</a></li>
+                <li><a href="#" id="apk-premium-link"><i class="fas fa-mobile-alt"></i> APK Premium</a></li>
+                <li><a href="#" id="script-bot-link"><i class="fas fa-robot"></i> Script Bot</a></li>
+                <li><a href="#" id="preset-link"><i class="fas fa-palette"></i> Preset</a></li>
+                <li><a href="#" id="suntik-sosmed-link"><i class="fas fa-syringe"></i> Suntik Sosmed</a></li>
+                <li><a href="#" id="free-fire-link"><i class="fas fa-fire"></i> Top Up Free Fire</a></li>
+                <li><a href="#" id="robux-link"><i class="fas fa-diamond"></i> Top Up Robux</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video</a></li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Game</a></li>
+            </ul>
+        </aside>
+
+        <!-- Product Section -->
+        <main class="products" id="main-products">
+            <div class="section-header">
+                <h2>Semua Produk</h2>
+                <div class="sort-filter">
+                    <select>
+                        <option>Urutkan: Terbaru</option>
+                        <option>Harga: Rendah ke Tinggi</option>
+                        <option>Harga: Tinggi ke Rendah</option>
+                        <option>Penilaian Tertinggi</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <span class="badge">Terlaris</span>
+                    <div class="product-image">
+                        <img src="https://cdn-icons-png.flaticon.com/512/888/888859.png" alt="APK Premium">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">APK Premium</div>
+                        <h3 class="product-title">Adobe Photoshop Pro</h3>
+                        <p class="product-description">Aplikasi premium dengan fitur lengkap dan gratis update selamanya</p>
+                        <div class="product-footer">
+                            <div class="product-price">Rp 149.000</div>
+                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Beli</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <span class="badge">Baru</span>
+                    <div class="product-image">
+                        <img src="https://cdn-icons-png.flaticon.com/512/888/888874.png" alt="E-Book">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">E-Book</div>
+                        <h3 class="product-title">Panduan Digital Marketing</h3>
+                        <p class="product-description">E-book lengkap strategi pemasaran digital untuk pemula hingga mahir</p>
+                        <div class="product-footer">
+                            <div class="product-price">Rp 79.000</div>
+                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Beli</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://cdn-icons-png.flaticon.com/512/888/888839.png" alt="Template">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Preset</div>
+                        <h3 class="product-title">Preset Lightroom Premium</h3>
+                        <p class="product-description">Koleksi preset untuk meningkatkan kualitas foto Anda dengan cepat</p>
+                        <div class="product-footer">
+                            <div class="product-price">Rp 129.000</div>
+                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Beli</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <span class="badge">Diskon 30%</span>
+                    <div class="product-image">
+                        <img src="https://cdn-icons-png.flaticon.com/512/888/888865.png" alt="Software">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Suntik Sosmed</div>
+                        <h3 class="product-title">Paket Instagram Followers</h3>
+                        <p class="product-description">Tingkatkan followers Instagram Anda dengan layanan premium</p>
+                        <div class="product-footer">
+                            <div class="product-price">Rp 29.500</div>
+                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Beli</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://cdn-icons-png.flaticon.com/512/888/888817.png" alt="Aset Digital">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Top Up Free Fire</div>
+                        <h3 class="product-title">Diamond Free Fire</h3>
+                        <p class="product-description">Diamond resmi untuk game Free Fire dengan harga terbaik</p>
+                        <div class="product-footer">
+                            <div class="product-price">Rp 28.000</div>
+                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Beli</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <span class="badge">Gratis</span>
+                    <div class="product-image">
+                        <img src="https://cdn-icons-png.flaticon.com/512/888/888841.png" alt="Game">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Top Up Robux</div>
+                        <h3 class="product-title">Robux Game Roblox</h3>
+                        <p class="product-description">Top up Robux untuk game Roblox dengan proses cepat</p>
+                        <div class="product-footer">
+                            <div class="product-price">Rp 20.000</div>
+                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Beli</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- APK Premium Page -->
+    <div id="apk-premium-page" class="category-page">
+        <div class="page-header">
+            <button class="back-button" id="back-to-main-apk">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>APK Premium</h1>
+        </div>
+        
+        <div class="page-description">
+            <p>Temukan koleksi lengkap aplikasi premium dengan harga terbaik. Semua aplikasi telah diuji dan dijamin keasliannya. Dengan satu kali pembelian, Anda mendapatkan akses seumur hidup dan update gratis.</p>
+            <p>Semua produk APK Premium kami siap digunakan segera setelah pembelian. Dukungan teknis tersedia 24 jam untuk membantu Anda.</p>
+        </div>
+        
+        <div class="category-grid" id="apk-products-container">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Script Bot Page -->
+    <div id="script-bot-page" class="category-page">
+        <div class="page-header">
+            <button class="back-button" id="back-to-main-script">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Script Bot</h1>
+        </div>
+        
+        <div class="page-description">
+            <p>Temukan koleksi lengkap script bot untuk berbagai kebutuhan. Script bot kami dioptimalkan untuk kinerja tinggi dan mudah dikustomisasi.</p>
+            <p>Semua produk Script Bot kami dilengkapi dengan dokumentasi lengkap dan dukungan teknis untuk membantu implementasi.</p>
+        </div>
+        
+        <div class="category-grid" id="script-bot-container">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Preset Page -->
+    <div id="preset-page" class="category-page">
+        <div class="page-header">
+            <button class="back-button" id="back-to-main-preset">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Preset Digital</h1>
+        </div>
+        
+        <div class="page-description">
+            <p>Temukan koleksi preset digital terbaik untuk meningkatkan kualitas karya Anda. Preset kami dirancang oleh profesional untuk memberikan hasil maksimal dengan usaha minimal.</p>
+            <p>Semua produk Preset kami dilengkapi dengan panduan penggunaan dan dukungan teknis jika diperlukan.</p>
+        </div>
+        
+        <div class="category-grid" id="preset-container">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Suntik Sosmed Page -->
+    <div id="suntik-sosmed-page" class="category-page">
+        <div class="page-header">
+            <button class="back-button" id="back-to-main-suntik">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Suntik Sosmed</h1>
+        </div>
+        
+        <div class="page-description">
+            <p>Temukan berbagai layanan untuk meningkatkan engagement sosial media Anda. Layanan kami aman, terpercaya, dan hasil instan.</p>
+            <p>Pilih layanan yang Anda butuhkan dan dapatkan hasil maksimal untuk akun Instagram dan TikTok Anda.</p>
+        </div>
+        
+        <div class="category-grid" id="suntik-sosmed-container">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Free Fire Page -->
+    <div id="free-fire-page" class="category-page">
+        <div class="page-header free-fire-header">
+            <button class="back-button" id="back-to-main-free-fire">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Top Up Free Fire</h1>
+        </div>
+        
+        <div class="page-description">
+            <p>Top up Diamond Free Fire dengan harga terbaik dan proses instan! Kami menyediakan berbagai paket Diamond untuk memenuhi kebutuhan gaming Anda. Pembelian aman dan terpercaya.</p>
+            <p>Diamond akan langsung masuk ke akun Free Fire Anda dalam waktu maksimal 10 menit setelah pembayaran berhasil.</p>
+        </div>
+        
+        <div class="category-grid" id="free-fire-container">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Robux Page -->
+    <div id="robux-page" class="category-page">
+        <div class="page-header robux-header">
+            <button class="back-button" id="back-to-main-robux">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Top Up Robux</h1>
+        </div>
+        
+        <div class="page-description">
+            <p>Top up Robux untuk game Roblox dengan harga spesial! Kami menyediakan berbagai paket Robux untuk kebutuhan gaming dan pembelian item di Roblox. Proses cepat dan aman.</p>
+            <p>Robux akan langsung masuk ke akun Roblox Anda dalam waktu maksimal 15 menit setelah pembayaran berhasil.</p>
+        </div>
+        
+        <div class="category-grid" id="robux-container">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal Pembayaran -->
+    <div class="modal" id="payment-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>Pembayaran via QRIS</h2>
+            
+            <div class="qris-container">
+                <img src="https://files.catbox.moe/qvkikr.jpg" alt="QRIS Payment" id="qris-image">
+            </div>
+            
+            <div class="modal-instructions">
+                <p><strong>Instruksi Pembayaran:</strong></p>
+                <ol>
+                    <li>Buka aplikasi mobile banking/e-wallet Anda</li>
+                    <li>Pindai QR Code di atas</li>
+                    <li>Masukkan nominal sesuai harga produk</li>
+                    <li>Konfirmasi pembayaran</li>
+                    <li>Simpan bukti pembayaran</li>
+                </ol>
+            </div>
+            
+            <p>Setelah pembayaran, klik tombol di bawah untuk mengirim bukti transfer:</p>
+            <button class="whatsapp-button" id="whatsapp-button">
+                <i class="fab fa-whatsapp"></i> Kirim Bukti via WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Tentang Puts Store</h3>
+                <p>Puts Store menyediakan berbagai produk digital dan fisik berkualitas tinggi dengan harga terbaik. Kami berkomitmen memberikan solusi lengkap untuk kebutuhan digital Anda.</p>
+                <div class="social-icons">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Link Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Beranda</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Produk</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Promo</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Tentang Kami</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Kontak</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Kategori Produk</h3>
+                <ul class="footer-links">
+                    <li><a href="#" id="footer-apk-link"><i class="fas fa-chevron-right"></i> APK Premium</a></li>
+                    <li><a href="#" id="footer-script-link"><i class="fas fa-chevron-right"></i> Script Bot</a></li>
+                    <li><a href="#" id="footer-preset-link"><i class="fas fa-chevron-right"></i> Preset</a></li>
+                    <li><a href="#" id="footer-suntik-link"><i class="fas fa-chevron-right"></i> Suntik Sosmed</a></li>
+                    <li><a href="#" id="footer-free-fire-link"><i class="fas fa-chevron-right"></i> Top Up Free Fire</a></li>
+                    <li><a href="#" id="footer-robux-link"><i class="fas fa-chevron-right"></i> Top Up Robux</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Kontak Kami</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Digital No. 123, Jakarta</p>
+                <p><i class="fas fa-phone"></i> (021) 1234-5678</p>
+                <p><i class="fas fa-envelope"></i> info@putsstore.com</p>
+                <p><i class="fas fa-clock"></i> Senin - Jumat: 09:00 - 17:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 Puts Store. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data produk APK Premium yang diperbarui
+        const apkProducts = [
+            { id: 1, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ 𝝰Ꙇׄꪱ๋ᦋ᳔𝗵ׅɬׅ ꭑ꯭𝗼᳔ɬׅꪱ๋𝗼᳔𐓣", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 2, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ 𝗯𝘀ׄɬׅ𝝰ɬׅꪱ๋𝗼᳔𐓣", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 3, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ 𝗰፝𝝰𐓣𝘃꯭𝝰", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 4, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ 𝗰፝𝝰𝞀ׄ𝗰፝𝗎ׄɬׅ", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 5, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ 𝗳ꪱ๋𝘇ׅ𝘇ׅ𝗼᳔", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 6, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ 𝗵ׅ𝗯𝗼᳔ᦋ᳔𝗼᳔", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 7, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ ꪱ๋𝗯ꪱ๋𝘀ׄ 𝞀ׄ𝝰ꪱ๋𐓣ɬׅ", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 8, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ Ꙇׄ𝗼᳔𝗸Ꙇׄ𝗼᳔𝗸", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 9, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ ꭑ꯭ᧉׅꪱ๋ɬׅ𝗎ׄ", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 10, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ 𐓣ᧉׅɬׅ𝗳Ꙇׄꪱ๋𝘅ׅ", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 11, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ 𝘀ׄ𝞀ׄ𝗼᳔ɬׅꪱ๋𝗳ყׄ", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 12, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ ωׄᧉׅɬׅ𝘃꯭", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 13, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ ωׄꪱ๋𝗯𝗎ׄ𝗸𝗎ׄ", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." },
+            { id: 14, name: "𓏲⋆ ִֶָ ๋𓂃 ⋆ ყׄɬׅ", price: "3.000", icon: "fas fa-mobile-alt", detail: "Aplikasi premium dengan fitur lengkap." }
+        ];
+
+        const scriptBotProducts = [
+            { id: 1, name: "Script Bot MD Jaga Grup", price: "35.000", icon: "fas fa-shield-alt", detail: "Bot otomatis untuk menjaga grup WhatsApp dari spam dan anggota tidak diinginkan. Fitur: auto kick, anti link, anti spam, dll." },
+            { id: 2, name: "Script JPM", price: "10.000", icon: "fas fa-bolt", detail: "Bot untuk game online dengan fitur auto farm dan auto quest. Kompatibel dengan berbagai game populer." }
+        ];
+
+        const presetProducts = [
+            { 
+                id: 1, 
+                name: "Preset GFX Premium", 
+                price: "49.000", 
+                image: "https://files.catbox.moe/pa4l58.jpg",
+                detail: "Koleksi lengkap preset GFX profesional untuk desain grafis Anda. Termasuk 50+ preset untuk berbagai kebutuhan desain: poster, banner, media sosial, dan lainnya. Preset ini kompatibel dengan Photoshop, Illustrator, dan Canva." 
+            },
+            { 
+                id: 2, 
+                name: "Preset Lightroom Pro", 
+                price: "39.000", 
+                icon: "fas fa-camera",
+                detail: "50+ preset Lightroom untuk fotografer profesional. Memberikan hasil instan yang memukau untuk berbagai jenis foto: landscape, portrait, street photography, dan lainnya." 
+            },
+            { 
+                id: 3, 
+                name: "Preset Video Premiere Pro", 
+                price: "59.000", 
+                icon: "fas fa-video",
+                detail: "Koleksi preset untuk Adobe Premiere Pro. Termasuk transisi, efek warna, dan template judul profesional. Cocok untuk content creator dan videographer." 
+            }
+        ];
+
+        // Data produk Suntik Sosmed
+        const suntikSosmedProducts = [
+            // Instagram Followers
+            { id: 1, name: "Instagram Followers: 100", price: "5.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 100 Followers" },
+            { id: 2, name: "Instagram Followers: 200", price: "6.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 200 Followers" },
+            { id: 3, name: "Instagram Followers: 300", price: "9.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 300 Followers" },
+            { id: 4, name: "Instagram Followers: 400", price: "12.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 400 Followers" },
+            { id: 5, name: "Instagram Followers: 500", price: "14.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 500 Followers" },
+            { id: 6, name: "Instagram Followers: 600", price: "17.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 600 Followers" },
+            { id: 7, name: "Instagram Followers: 700", price: "19.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 700 Followers" },
+            { id: 8, name: "Instagram Followers: 800", price: "22.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 800 Followers" },
+            { id: 9, name: "Instagram Followers: 900", price: "25.000", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 900 Followers" },
+            { id: 10, name: "Instagram Followers: 1000", price: "29.500", icon: "fab fa-instagram", detail: "Layanan Instagram Followers: 1000 Followers" },
+            
+            // Instagram Like
+            { id: 11, name: "Instagram Like: 4000", price: "4.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 4000 Likes" },
+            { id: 12, name: "Instagram Like: 5000", price: "5.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 5000 Likes" },
+            { id: 13, name: "Instagram Like: 6000", price: "6.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 6000 Likes" },
+            { id: 14, name: "Instagram Like: 7000", price: "7.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 7000 Likes" },
+            { id: 15, name: "Instagram Like: 8000", price: "8.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 8000 Likes" },
+            { id: 16, name: "Instagram Like: 9000", price: "9.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 9000 Likes" },
+            { id: 17, name: "Instagram Like: 10000", price: "10.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 10000 Likes" },
+            { id: 18, name: "Instagram Like: 50000", price: "45.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 50000 Likes" },
+            { id: 19, name: "Instagram Like: 100000", price: "85.000", icon: "fab fa-instagram", detail: "Layanan Instagram Like: 100000 Likes" },
+            
+            // TikTok Followers
+            { id: 20, name: "TikTok Followers: 100", price: "5.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 100 Followers" },
+            { id: 21, name: "TikTok Followers: 200", price: "8.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 200 Followers" },
+            { id: 22, name: "TikTok Followers: 300", price: "11.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 300 Followers" },
+            { id: 23, name: "TikTok Followers: 400", price: "14.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 400 Followers" },
+            { id: 24, name: "TikTok Followers: 500", price: "17.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 500 Followers" },
+            { id: 25, name: "TikTok Followers: 600", price: "20.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 600 Followers" },
+            { id: 26, name: "TikTok Followers: 700", price: "23.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 700 Followers" },
+            { id: 27, name: "TikTok Followers: 800", price: "26.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 800 Followers" },
+            { id: 28, name: "TikTok Followers: 900", price: "29.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 900 Followers" },
+            { id: 29, name: "TikTok Followers: 1000", price: "32.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Followers: 1000 Followers" },
+            
+            // TikTok Like
+            { id: 30, name: "TikTok Like: 1000", price: "5.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 1000 Likes" },
+            { id: 31, name: "TikTok Like: 2000", price: "8.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 2000 Likes" },
+            { id: 32, name: "TikTok Like: 3000", price: "10.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 3000 Likes" },
+            { id: 33, name: "TikTok Like: 4000", price: "12.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 4000 Likes" },
+            { id: 34, name: "TikTok Like: 5000", price: "15.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 5000 Likes" },
+            { id: 35, name: "TikTok Like: 6000", price: "18.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 6000 Likes" },
+            { id: 36, name: "TikTok Like: 7000", price: "19.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 7000 Likes" },
+            { id: 37, name: "TikTok Like: 8000", price: "21.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 8000 Likes" },
+            { id: 38, name: "TikTok Like: 9000", price: "22.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 9000 Likes" },
+            { id: 39, name: "TikTok Like: 10000", price: "25.000", icon: "fab fa-tiktok", detail: "Layanan TikTok Like: 10000 Likes" }
+        ];
+        
+        // Data produk Top Up Free Fire
+        const freeFireProducts = [
+            { id: 1, name: "Diamond Free Fire: 50", price: "7.500", icon: "fas fa-diamond", detail: "50 Diamond Free Fire" },
+            { id: 2, name: "Diamond Free Fire: 100", price: "15.000", icon: "fas fa-diamond", detail: "100 Diamond Free Fire" },
+            { id: 3, name: "Diamond Free Fire: 150", price: "21.500", icon: "fas fa-diamond", detail: "150 Diamond Free Fire" },
+            { id: 4, name: "Diamond Free Fire: 200+10", price: "28.000", icon: "fas fa-diamond", detail: "210 Diamond Free Fire (200+10 bonus)" },
+            { id: 5, name: "Diamond Free Fire: 300", price: "42.000", icon: "fas fa-diamond", detail: "300 Diamond Free Fire" },
+            { id: 6, name: "Diamond Free Fire: 500", price: "70.000", icon: "fas fa-diamond", detail: "500 Diamond Free Fire" },
+            { id: 7, name: "Diamond Free Fire: 1000", price: "145.000", icon: "fas fa-diamond", detail: "1000 Diamond Free Fire" },
+            { id: 8, name: "Diamond Free Fire: 2000", price: "270.000", icon: "fas fa-diamond", detail: "2000 Diamond Free Fire" }
+        ];
+        
+        // Data produk Top Up Robux
+        const robuxProducts = [
+            { id: 1, name: "Robux: 80", price: "20.000", icon: "fas fa-gamepad", detail: "80 Robux untuk game Roblox" },
+            { id: 2, name: "Robux: 160", price: "38.000", icon: "fas fa-gamepad", detail: "160 Robux untuk game Roblox" },
+            { id: 3, name: "Robux: 240", price: "52.000", icon: "fas fa-gamepad", detail: "240 Robux untuk game Roblox" },
+            { id: 4, name: "Robux: 320", price: "68.000", icon: "fas fa-gamepad", detail: "320 Robux untuk game Roblox" },
+            { id: 5, name: "Robux: 400", price: "80.000", icon: "fas fa-gamepad", detail: "400 Robux untuk game Roblox" },
+            { id: 6, name: "Robux: 500", price: "85.000", icon: "fas fa-gamepad", detail: "500 Robux untuk game Roblox" }
+        ];
+
+        // DOM elements
+        const apkPremiumLink = document.getElementById('apk-premium-link');
+        const scriptBotLink = document.getElementById('script-bot-link');
+        const presetLink = document.getElementById('preset-link');
+        const suntikSosmedLink = document.getElementById('suntik-sosmed-link');
+        const freeFireLink = document.getElementById('free-fire-link');
+        const robuxLink = document.getElementById('robux-link');
+        
+        const apkPremiumPage = document.getElementById('apk-premium-page');
+        const scriptBotPage = document.getElementById('script-bot-page');
+        const presetPage = document.getElementById('preset-page');
+        const suntikSosmedPage = document.getElementById('suntik-sosmed-page');
+        const freeFirePage = document.getElementById('free-fire-page');
+        const robuxPage = document.getElementById('robux-page');
+        
+        const backToMainApk = document.getElementById('back-to-main-apk');
+        const backToMainScript = document.getElementById('back-to-main-script');
+        const backToMainPreset = document.getElementById('back-to-main-preset');
+        const backToMainSuntik = document.getElementById('back-to-main-suntik');
+        const backToMainFreeFire = document.getElementById('back-to-main-free-fire');
+        const backToMainRobux = document.getElementById('back-to-main-robux');
+        
+        const mainContent = document.querySelector('.container');
+        const heroSection = document.querySelector('.hero');
+        const mainProducts = document.getElementById('main-products');
+        
+        const apkProductsContainer = document.getElementById('apk-products-container');
+        const scriptBotContainer = document.getElementById('script-bot-container');
+        const presetContainer = document.getElementById('preset-container');
+        const suntikSosmedContainer = document.getElementById('suntik-sosmed-container');
+        const freeFireContainer = document.getElementById('free-fire-container');
+        const robuxContainer = document.getElementById('robux-container');
+        
+        const allProductsLink = document.getElementById('all-products-link');
+        
+        const footerApkLink = document.getElementById('footer-apk-link');
+        const footerScriptLink = document.getElementById('footer-script-link');
+        const footerPresetLink = document.getElementById('footer-preset-link');
+        const footerSuntikLink = document.getElementById('footer-suntik-link');
+        const footerFreeFireLink = document.getElementById('footer-free-fire-link');
+        const footerRobuxLink = document.getElementById('footer-robux-link');
+        
+        const paymentModal = document.getElementById('payment-modal');
+        const closeModal = document.getElementById('close-modal');
+        const whatsappButton = document.getElementById('whatsapp-button');
+
+        // Show APK Premium page
+        function showApkPage() {
+            heroSection.style.display = 'none';
+            mainContent.style.display = 'none';
+            scriptBotPage.style.display = 'none';
+            presetPage.style.display = 'none';
+            suntikSosmedPage.style.display = 'none';
+            freeFirePage.style.display = 'none';
+            robuxPage.style.display = 'none';
+            apkPremiumPage.style.display = 'block';
+            
+            // Update active category
+            document.querySelectorAll('.category-list a').forEach(link => {
+                link.classList.remove('active-category');
+            });
+            apkPremiumLink.classList.add('active-category');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Show Script Bot page
+        function showScriptBotPage() {
+            heroSection.style.display = 'none';
+            mainContent.style.display = 'none';
+            apkPremiumPage.style.display = 'none';
+            presetPage.style.display = 'none';
+            suntikSosmedPage.style.display = 'none';
+            freeFirePage.style.display = 'none';
+            robuxPage.style.display = 'none';
+            scriptBotPage.style.display = 'block';
+            
+            // Update active category
+            document.querySelectorAll('.category-list a').forEach(link => {
+                link.classList.remove('active-category');
+            });
+            scriptBotLink.classList.add('active-category');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Show Preset page
+        function showPresetPage() {
+            heroSection.style.display = 'none';
+            mainContent.style.display = 'none';
+            apkPremiumPage.style.display = 'none';
+            scriptBotPage.style.display = 'none';
+            suntikSosmedPage.style.display = 'none';
+            freeFirePage.style.display = 'none';
+            robuxPage.style.display = 'none';
+            presetPage.style.display = 'block';
+            
+            // Update active category
+            document.querySelectorAll('.category-list a').forEach(link => {
+                link.classList.remove('active-category');
+            });
+            presetLink.classList.add('active-category');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Show Suntik Sosmed page
+        function showSuntikSosmedPage() {
+            heroSection.style.display = 'none';
+            mainContent.style.display = 'none';
+            apkPremiumPage.style.display = 'none';
+            scriptBotPage.style.display = 'none';
+            presetPage.style.display = 'none';
+            freeFirePage.style.display = 'none';
+            robuxPage.style.display = 'none';
+            suntikSosmedPage.style.display = 'block';
+            
+            // Update active category
+            document.querySelectorAll('.category-list a').forEach(link => {
+                link.classList.remove('active-category');
+            });
+            suntikSosmedLink.classList.add('active-category');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Show Free Fire page
+        function showFreeFirePage() {
+            heroSection.style.display = 'none';
+            mainContent.style.display = 'none';
+            apkPremiumPage.style.display = 'none';
+            scriptBotPage.style.display = 'none';
+            presetPage.style.display = 'none';
+            suntikSosmedPage.style.display = 'none';
+            robuxPage.style.display = 'none';
+            freeFirePage.style.display = 'block';
+            
+            // Update active category
+            document.querySelectorAll('.category-list a').forEach(link => {
+                link.classList.remove('active-category');
+            });
+            freeFireLink.classList.add('active-category');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Show Robux page
+        function showRobuxPage() {
+            heroSection.style.display = 'none';
+            mainContent.style.display = 'none';
+            apkPremiumPage.style.display = 'none';
+            scriptBotPage.style.display = 'none';
+            presetPage.style.display = 'none';
+            suntikSosmedPage.style.display = 'none';
+            freeFirePage.style.display = 'none';
+            robuxPage.style.display = 'block';
+            
+            // Update active category
+            document.querySelectorAll('.category-list a').forEach(link => {
+                link.classList.remove('active-category');
+            });
+            robuxLink.classList.add('active-category');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Back to main page
+        function backToMain() {
+            heroSection.style.display = 'block';
+            mainContent.style.display = 'flex';
+            apkPremiumPage.style.display = 'none';
+            scriptBotPage.style.display = 'none';
+            presetPage.style.display = 'none';
+            suntikSosmedPage.style.display = 'none';
+            freeFirePage.style.display = 'none';
+            robuxPage.style.display = 'none';
+            
+            // Reset active category to "All Products"
+            document.querySelectorAll('.category-list a').forEach(link => {
+                link.classList.remove('active-category');
+            });
+            allProductsLink.classList.add('active-category');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Toggle detail
+        function toggleDetail(button) {
+            const card = button.closest('.category-card');
+            const detail = card.querySelector('.category-detail');
+            const isExpanded = detail.classList.contains('expanded');
+            
+            if (isExpanded) {
+                detail.classList.remove('expanded');
+                button.textContent = 'Detail';
+                button.classList.remove('expanded');
+            } else {
+                detail.classList.add('expanded');
+                button.textContent = 'Sembunyikan';
+                button.classList.add('expanded');
+            }
+        }
+
+        // Show payment modal
+        function showPaymentModal(productName, price) {
+            paymentModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        // Close payment modal
+        function closePaymentModal() {
+            paymentModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Enable scrolling
+        }
+
+        // Generate APK products
+        function generateApkProducts() {
+            apkProductsContainer.innerHTML = '';
+            
+            apkProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'category-card';
+                productCard.innerHTML = `
+                    <div class="category-icon">
+                        <i class="${product.icon}"></i>
+                    </div>
+                    <div class="category-info">
+                        <div class="category-name">${product.name}</div>
+                        <div class="category-detail">
+                            ${product.detail}
+                        </div>
+                        <div class="category-price">Rp ${product.price}</div>
+                        <div class="category-actions">
+                            <button class="buy-button" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Beli Sekarang</button>
+                            <button class="detail-button" onclick="toggleDetail(this)">Detail</button>
+                        </div>
+                    </div>
+                `;
+                apkProductsContainer.appendChild(productCard);
+            });
+            
+            // Add event listeners to buy buttons
+            document.querySelectorAll('#apk-products-container .buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.getAttribute('data-name');
+                    const price = this.getAttribute('data-price');
+                    showPaymentModal(productName, price);
+                });
+            });
+        }
+
+        // Generate Script Bot products
+        function generateScriptBotProducts() {
+            scriptBotContainer.innerHTML = '';
+            
+            scriptBotProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'category-card';
+                productCard.innerHTML = `
+                    <div class="category-icon">
+                        <i class="${product.icon}"></i>
+                    </div>
+                    <div class="category-info">
+                        <div class="category-name">${product.name}</div>
+                        <div class="category-detail">
+                            ${product.detail}
+                        </div>
+                        <div class="category-price">Rp ${product.price}</div>
+                        <div class="category-actions">
+                            <button class="buy-button" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Beli Sekarang</button>
+                            <button class="detail-button" onclick="toggleDetail(this)">Detail</button>
+                        </div>
+                    </div>
+                `;
+                scriptBotContainer.appendChild(productCard);
+            });
+            
+            // Add event listeners to buy buttons
+            document.querySelectorAll('#script-bot-container .buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.getAttribute('data-name');
+                    const price = this.getAttribute('data-price');
+                    showPaymentModal(productName, price);
+                });
+            });
+        }
+
+        // Generate Preset products
+        function generatePresetProducts() {
+            presetContainer.innerHTML = '';
+            
+            presetProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'category-card';
+                
+                // Use image if available, otherwise use icon
+                const mediaContent = product.image 
+                    ? `<img src="${product.image}" alt="${product.name}">`
+                    : `<i class="${product.icon}"></i>`;
+                
+                productCard.innerHTML = `
+                    <div class="category-icon">
+                        ${mediaContent}
+                    </div>
+                    <div class="category-info">
+                        <div class="category-name">${product.name}</div>
+                        <div class="category-detail">
+                            ${product.detail}
+                        </div>
+                        <div class="category-price">Rp ${product.price}</div>
+                        <div class="category-actions">
+                            <button class="buy-button" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Beli Sekarang</button>
+                            <button class="detail-button" onclick="toggleDetail(this)">Detail</button>
+                        </div>
+                    </div>
+                `;
+                presetContainer.appendChild(productCard);
+            });
+            
+            // Add event listeners to buy buttons
+            document.querySelectorAll('#preset-container .buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.getAttribute('data-name');
+                    const price = this.getAttribute('data-price');
+                    showPaymentModal(productName, price);
+                });
+            });
+        }
+
+        // Generate Suntik Sosmed products
+        function generateSuntikSosmedProducts() {
+            suntikSosmedContainer.innerHTML = '';
+            
+            suntikSosmedProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'category-card';
+                productCard.innerHTML = `
+                    <div class="category-icon">
+                        <i class="${product.icon}"></i>
+                    </div>
+                    <div class="category-info">
+                        <div class="category-name">${product.name}</div>
+                        <div class="category-detail">
+                            ${product.detail}
+                        </div>
+                        <div class="category-price">Rp ${product.price}</div>
+                        <div class="category-actions">
+                            <button class="buy-button" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Beli Sekarang</button>
+                            <button class="detail-button" onclick="toggleDetail(this)">Detail</button>
+                        </div>
+                    </div>
+                `;
+                suntikSosmedContainer.appendChild(productCard);
+            });
+            
+            // Add event listeners to buy buttons
+            document.querySelectorAll('#suntik-sosmed-container .buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.getAttribute('data-name');
+                    const price = this.getAttribute('data-price');
+                    showPaymentModal(productName, price);
+                });
+            });
+        }
+        
+        // Generate Free Fire products
+        function generateFreeFireProducts() {
+            freeFireContainer.innerHTML = '';
+            
+            freeFireProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'category-card';
+                productCard.innerHTML = `
+                    <div class="category-icon free-fire-icon">
+                        <i class="${product.icon}"></i>
+                    </div>
+                    <div class="category-info">
+                        <div class="category-name">${product.name}</div>
+                        <div class="category-detail">
+                            ${product.detail}
+                        </div>
+                        <div class="category-price free-fire-price">Rp ${product.price}</div>
+                        <div class="category-actions">
+                            <button class="buy-button free-fire-button" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Beli Sekarang</button>
+                            <button class="detail-button" onclick="toggleDetail(this)">Detail</button>
+                        </div>
+                    </div>
+                `;
+                freeFireContainer.appendChild(productCard);
+            });
+            
+            // Add event listeners to buy buttons
+            document.querySelectorAll('#free-fire-container .buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.getAttribute('data-name');
+                    const price = this.getAttribute('data-price');
+                    showPaymentModal(productName, price);
+                });
+            });
+        }
+        
+        // Generate Robux products
+        function generateRobuxProducts() {
+            robuxContainer.innerHTML = '';
+            
+            robuxProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'category-card';
+                productCard.innerHTML = `
+                    <div class="category-icon robux-icon">
+                        <i class="${product.icon}"></i>
+                    </div>
+                    <div class="category-info">
+                        <div class="category-name">${product.name}</div>
+                        <div class="category-detail">
+                            ${product.detail}
+                        </div>
+                        <div class="category-price robux-price">Rp ${product.price}</div>
+                        <div class="category-actions">
+                            <button class="buy-button robux-button" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Beli Sekarang</button>
+                            <button class="detail-button" onclick="toggleDetail(this)">Detail</button>
+                        </div>
+                    </div>
+                `;
+                robuxContainer.appendChild(productCard);
+            });
+            
+            // Add event listeners to buy buttons
+            document.querySelectorAll('#robux-container .buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.getAttribute('data-name');
+                    const price = this.getAttribute('data-price');
+                    showPaymentModal(productName, price);
+                });
+            });
+        }
+
+        // Event listeners
+        apkPremiumLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showApkPage();
+        });
+
+        scriptBotLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showScriptBotPage();
+        });
+
+        presetLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showPresetPage();
+        });
+
+        suntikSosmedLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSuntikSosmedPage();
+        });
+        
+        freeFireLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showFreeFirePage();
+        });
+        
+        robuxLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showRobuxPage();
+        });
+
+        footerApkLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showApkPage();
+        });
+
+        footerScriptLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showScriptBotPage();
+        });
+
+        footerPresetLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showPresetPage();
+        });
+
+        footerSuntikLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSuntikSosmedPage();
+        });
+        
+        footerFreeFireLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showFreeFirePage();
+        });
+        
+        footerRobuxLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showRobuxPage();
+        });
+
+        allProductsLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            backToMain();
+        });
+
+        backToMainApk.addEventListener('click', function(e) {
+            e.preventDefault();
+            backToMain();
+        });
+
+        backToMainScript.addEventListener('click', function(e) {
+            e.preventDefault();
+            backToMain();
+        });
+
+        backToMainPreset.addEventListener('click', function(e) {
+            e.preventDefault();
+            backToMain();
+        });
+
+        backToMainSuntik.addEventListener('click', function(e) {
+            e.preventDefault();
+            backToMain();
+        });
+        
+        backToMainFreeFire.addEventListener('click', function(e) {
+            e.preventDefault();
+            backToMain();
+        });
+        
+        backToMainRobux.addEventListener('click', function(e) {
+            e.preventDefault();
+            backToMain();
+        });
+
+        closeModal.addEventListener('click', closePaymentModal);
+        
+        // Close modal when clicking outside the modal content
+        window.addEventListener('click', function(event) {
+            if (event.target === paymentModal) {
+                closePaymentModal();
+            }
+        });
+        
+        // Whatsapp button functionality
+        whatsappButton.addEventListener('click', function() {
+            const whatsappUrl = `https://wa.me/6285763078368?text=Saya%20Sudah%20Tf%20untuk%20pembelian%20di%20Puts%20Store`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // Initialize
+        generateApkProducts();
+        generateScriptBotProducts();
+        generatePresetProducts();
+        generateSuntikSosmedProducts();
+        generateFreeFireProducts();
+        generateRobuxProducts();
+
+        // Animasi untuk tombol "Add to Cart" di halaman utama
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const cartCount = document.querySelector('.cart-count');
+                let count = parseInt(cartCount.textContent);
+                cartCount.textContent = count + 1;
+                
+                // Animasi feedback
+                this.innerHTML = '<i class="fas fa-check"></i> Ditambahkan';
+                this.style.backgroundColor = '#28a745';
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-cart-plus"></i> Beli';
+                    this.style.backgroundColor = '';
+                }, 1500);
+            });
+        });
+        
+        // Animasi untuk kategori sidebar
+        document.querySelectorAll('.category-list a').forEach(link => {
+            if (!['apk-premium-link', 'script-bot-link', 'preset-link', 'suntik-sosmed-link', 'free-fire-link', 'robux-link'].includes(link.id)) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.active-category').classList.remove('active-category');
+                    this.classList.add('active-category');
+                });
+            }
+        });
+        
+        // Expose toggleDetail to global scope
+        window.toggleDetail = toggleDetail;
+    </script>
+</body>
+</html>
